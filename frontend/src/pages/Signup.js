@@ -11,7 +11,6 @@ function Signup() {
         password: ''
     });
 
-    
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -29,17 +28,16 @@ function Signup() {
             const url = `https://deploy-my-app-api.onrender.com/auth/signup`;
             const response = await fetch(url, {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(signupInfo)
             });
             const result = await response.json();
             const { success, message, error } = result;
+            
             if (success) {
                 handleSuccess(message);
                 setTimeout(() => navigate('/login'), 1000);
-            } else if (error) {
+            } else {
                 handleError(error?.details?.[0]?.message || message);
             }
         } catch (err) {
@@ -62,6 +60,7 @@ function Signup() {
                         <div className="mb-4">
                             <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Name</label>
                             <input
+                                id="name"
                                 onChange={handleChange}
                                 type="text"
                                 name="name"
@@ -73,6 +72,7 @@ function Signup() {
                         <div className="mb-4">
                             <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email</label>
                             <input
+                                id="email"
                                 onChange={handleChange}
                                 type="email"
                                 name="email"
@@ -84,6 +84,7 @@ function Signup() {
                         <div className="mb-6">
                             <label htmlFor="password" className="block text-gray-700 font-medium mb-2">Password</label>
                             <input
+                                id="password"
                                 onChange={handleChange}
                                 type="password"
                                 name="password"
