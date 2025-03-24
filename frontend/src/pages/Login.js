@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate here
+import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import { handleError, handleSuccess } from '../utils';
@@ -9,9 +9,9 @@ function Login() {
         email: '',
         password: ''
     });
-    const navigate = useNavigate(); // Initialize navigate here
 
-    
+    const navigate = useNavigate();
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setLoginInfo({ ...loginInfo, [name]: value });
@@ -20,9 +20,11 @@ function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
         const { email, password } = loginInfo;
-        if (!email || !password) {
+
+        if (!email.trim() || !password.trim()) {
             return handleError('Email and password are required');
         }
+
         try {
             const url = `https://deploy-my-app-api.onrender.com/auth/login`;
             const response = await fetch(url, {
@@ -30,18 +32,22 @@ function Login() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(loginInfo)
+                body: JSON.stringify({ email: email.trim(), password: password.trim() })
             });
+
+            if (!response.ok) {
+                throw new Error(`HTTP Error: ${response.status}`);
+            }
+
             const result = await response.json();
-            const { success, message, error } = result;
-            if (success) {
-                handleSuccess(message);
-                setTimeout(() => navigate('/messages'), 1000); // Use navigate to redirect after login
-            } else if (error) {
-                handleError(error?.details?.[0]?.message || message);
+            if (result.success) {
+                handleSuccess(result.message || 'Login successful');
+                setTimeout(() => navigate('/messages'), 1000);
+            } else {
+                handleError(result.error || result.message || 'Login failed');
             }
         } catch (err) {
-            handleError(err.message);
+            handleError(err.message || 'Something went wrong');
         }
     };
 
