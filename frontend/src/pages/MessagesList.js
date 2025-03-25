@@ -60,17 +60,17 @@ const MessagesList = () => {
       </button>
       <h2>Messages</h2>
       {error && <p>{error}</p>}
-      {messages.length > 0 ? (
-        <table className="min-w-full table-auto">
-          <thead>
-            <tr>
-              <th className="border px-4 py-2">Username</th>
-              <th className="border px-4 py-2">Email</th>
-              <th className="border px-4 py-2">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {messages.map((msg) => (
+      <table className="min-w-full table-auto">
+        <thead>
+          <tr>
+            <th className="border px-4 py-2">Name</th>
+            <th className="border px-4 py-2">Email</th>
+            <th className="border px-4 py-2">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {messages.length > 0 ? (
+            messages.map((msg) => (
               <tr key={msg._id}>
                 <td className="border px-4 py-2">{msg.name}</td>
                 <td className="border px-4 py-2">{msg.email}</td>
@@ -83,12 +83,16 @@ const MessagesList = () => {
                   </button>
                 </td>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>No messages available.</p>
-      )}
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3" className="border px-4 py-2 text-center">
+                No messages available.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };
