@@ -68,7 +68,7 @@ function Home() {
     const { name, email, message } = formData;
     if (name && email && message) {
       try {
-        const response = await fetch("https://deploy-mern-app-1-api.vercel.app/messages", {
+        const response = await fetch("https://deploy-my-app-api.onrender.com/messages", {
           method: 'POST',
           headers: {
             'Authorization': localStorage.getItem('token'),
