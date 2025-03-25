@@ -10,7 +10,7 @@ const MessagesList = () => {
   
   const fetchMessages = async () => {
     try {
-      const response = await fetch('https://deploy-my-app-api.onrender.com/messages', {
+      const response = await fetch('https://deploy-mern-app-1-api.vercel.app/messages', {
         headers: {
           'Authorization': localStorage.getItem('token'),
         }
@@ -33,7 +33,7 @@ const MessagesList = () => {
 
   const handleDeleteMessage = async (id) => {
     try {
-      const response = await fetch(`https://deploy-my-app-api.onrender.com/messages/${id}`, {
+      const response = await fetch(`https://deploy-mern-app-1-api.vercel.app/messages/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': localStorage.getItem('token'),
